@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  pb:
+    build: pb
+    ports:
+      - 8090:8090
+    volumes:
+      - ./pb/pb_data:/usr/local/bin/pb_data
+      - ./pb/pb_migrations:/usr/local/bin/pb_migrations #optional
