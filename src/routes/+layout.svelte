@@ -21,7 +21,7 @@
 			<svelte:fragment slot="lead"><Icon icon="ph:robot-fill" height=40/></svelte:fragment>
 			<h2 class="h2 hover:variant-ghost duration-500 p-2 rounded-md"><a href="/">AI OOPS</a></h2>
 			<svelte:fragment slot="trail">
-
+				<a href="/submit" class="hover:variant-ghost variant-glass duration-500 p-2 rounded-md"> Submit  <Icon icon="mdi:plus-circle" inline={true} class="inline"/></a>
 				{#if !auth.isValid}<a href="/login" class="hover:variant-ghost variant-glass duration-500 p-2 rounded-md">Login</a>
 				{:else}<a href="/logout" class="hover:variant-ghost variant-glass duration-500 p-2 rounded-md">Logout</a>{/if}
 			</svelte:fragment>
