@@ -192,10 +192,8 @@ class ProxyTextareaElement {
 
   onUpdateText(text: string) {
     this.__updateText(text);
-    this._element!.style.setProperty(
-      "height",
-      this.__getComputedHeight() + "px"
-    );
+    const height_str = this.__getComputedHeight() + "px";
+    this._element!.style.setProperty("height", height_str);
   }
 
   cleanUp() {

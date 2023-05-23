@@ -14,5 +14,5 @@
     $: output(internal)
   </script>
   
-  <input type="date" class="input" bind:value={internal} />
+  <input type="date" class="input" bind:value={internal} {...$$props} />
   

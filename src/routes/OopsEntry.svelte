@@ -8,13 +8,16 @@
         @apply !text-primary-content;
     }
     :global(.svelecte .sv-input-row .sv-item) {
-        @apply bg-base-200  mx-2 px-2 flex;
+        @apply bg-base-300  mr-2 px-2 flex rounded-lg;
     }
-    :global(.svelecte input:focus) {
-        outline: none !important;
+    :global(.svelecte.input) {
+        @apply !pl-0;
     }
-    .textarea[disabled] {
-        cursor: auto;
+    :global(.oops-entry textarea[disabled], .oops-entry input[disabled]) {
+        cursor: text;
+    }
+    :global(.svelecte.is-disabled) {
+        background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
     }
 </style>
 
@@ -78,30 +81,31 @@
         new_model_modal = true;
     }
 </script>
-{editable}
-<form on:submit|preventDefault={submit_oops} class="form-control w-[80%] flex flex-col justify-center align-middle m-auto">
-    <b>Prompt:</b>
-    <AutoTextArea placeholder="What did you say to the AI..." bind:value={form.prompt} required disabled={!editable} minRows={5} maxRows={140}/>
-    <b>AI Response:</b>
-    <textarea placeholder="What did the AI respond..." class="textarea" bind:value={form.ai_resp} required disabled={!editable}/>
-
-    <b>Your Ideal Response (Optional):</b>
+<form on:submit|preventDefault={submit_oops} class="oops-entry form-control w-[80%] flex flex-col justify-center align-middle m-auto">
+    <b class="mb-2">Prompt:</b>
+    <AutoTextArea placeholder="What did you say to the AI..." bind:value={form.prompt} required disabled={!editable}/>
+    <br>
+    <b class="mb-2">AI Response:</b>
+    <AutoTextArea placeholder="What did the AI respond..." class="textarea" bind:value={form.ai_resp} required disabled={!editable}/>
+    <br>
+    <b class="mb-2">Your Ideal Response (Optional):</b>
     <AutoTextArea placeholder="Optional: Give a response which you think best fits the prompt..." class="textarea" bind:value={form.user_resp} disabled={!editable}/>
-
-    <b>Your Reasoning (Optional):</b>
+    <br>
+    <b class="mb-2">Your Reasoning (Optional):</b>
     <AutoTextArea placeholder="Optional: Explain why you think the AI is wrong and your answer is better..." class="textarea" bind:value={form.user_reason} disabled={!editable}/>
-
-    <b>Date of Interaction:</b>
-    <DateInput bind:date={form.event_date}/>
-
-    <b>AI Model:</b>
+    <br>
+    <b class="mb-2">Date of Interaction:</b>
+    <DateInput bind:date={form.event_date} disabled={!editable}/>
+    <br>
+    <b class="mb-2">AI Model:</b>
     <Svelecte bind:value={form.model} options={ai_opts} placeholder="AI Model Name" class="input h-auto" creatable on:createoption="{new_ai_model}" required disabled={!editable}/>
-
-    <b>Tags:</b>
+    <br>
+    <b class="mb-2">Tags:</b>
     <Svelecte bind:value={form.tags} bind:options={tag_opts} placeholder="Tags" class="input h-auto p-0" creatable creatablePrefix="" on:createoption="{new_tag}" multiple disabled={!editable}/>
-
-    <hr class="my-5">
-    <button type="submit" class="btn btn-accent rounded w-40 m-auto">Submit Oops!</button>
+    {#if editable}
+        <hr class="my-5">
+        <button type="submit" class="btn btn-accent rounded w-40 m-auto">Submit Oops!</button>
+    {/if}
 </form>
 
 <input type="checkbox" id="new-model-modal" class="modal-toggle" bind:checked={new_model_modal} />

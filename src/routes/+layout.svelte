@@ -6,16 +6,16 @@
 
 
 	import Icon from '@iconify/svelte';
-	import Header from './header.svelte';
+	import Header from './Header.svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast'
 	import { pb } from '$lib/pocketbase'
 	$: auth = pb.authStore
 </script>
 
 
-<div class="bg-base-200 w-full h-full">
+<div class="bg-base-200 w-full h-full flex flex-col overflow-hidden">
 	<Header />
-	<div class="p-5">
+	<div class="p-5 overflow-y-auto">
 		<slot/>
 	</div>
 	<SvelteToast options={{classes: ["toaster"]}} />

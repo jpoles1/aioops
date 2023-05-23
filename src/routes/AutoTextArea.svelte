@@ -1,41 +1,32 @@
 <script lang="ts">
-	export let value = '';
-	export let min_rows = 1;
-	export let max_rows: number;
-    let kargs;
-    $: ({ value, min_rows, max_rows, ...kargs } = $$props);
+import { onDestroy } from "svelte";
+import type { HTMLTextareaAttributes } from 'svelte/elements'
 
-	$: min_height = `${1 + min_rows * 1.2}em`;
-	$: max_height = max_rows ? `${1 + max_rows * 1.2}em` : `auto`;
+interface $$Props extends HTMLTextareaAttributes {
+  value?: any;
+  minRows?: number;
+  maxRows?: number;
+}
+
+export let value = '';
+export let minRows: number | undefined = 2;
+export let maxRows: number | undefined = 20;
+
+import ProxyTextareaElement from "./core";
+
+let element: HTMLTextAreaElement | null = null;
+
+const instance = new ProxyTextareaElement();
+
+$: {
+  if (element !== null && !instance.hasStarted) instance.start(element, minRows, maxRows);
+  if (instance.hasStarted) instance.onUpdateText((value || '').toString());
+}
+
+onDestroy(() => {
+  instance.cleanUp();
+});
+
 </script>
 
-<div class="container !border-none">
-	<pre
-		aria-hidden="true"
-		style="min-height: {min_height}; max-height: {max_height}; border: none;"
-	>{value + '\n'}</pre>
-	<textarea bind:value class="input textarea"></textarea>	
-</div>
-
-<style>
-	.container {
-		position: relative;
-	}
-	
-	pre, textarea {
-		font-family: inherit;
-		padding: 0.5em;
-		box-sizing: border-box;
-		border: 1px solid #eee;
-		line-height: 1.2;
-		overflow: auto;
-	}
-	
-	textarea {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		resize: none;
-	}
-</style>
+<textarea {...$$props} bind:this={element} bind:value={value} class="textarea overflow-auto"/>
