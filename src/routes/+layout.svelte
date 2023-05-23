@@ -6,13 +6,52 @@
 
 
 	import Icon from '@iconify/svelte';
-	import { pb } from '$lib/pocketbase'
 	import Header from './header.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast'
+	import { pb } from '$lib/pocketbase'
 	$: auth = pb.authStore
 </script>
 
 
-<div class="bg-neutral w-full h-full">
+<div class="bg-base-200 w-full h-full">
 	<Header />
-	<slot/>
+	<div class="p-5">
+		<slot/>
+	</div>
+	<SvelteToast options={{classes: ["toaster"]}} />
 </div>
+
+<style>
+:root {
+	--toastContainerTop: auto;
+	--toastContainerRight: auto;
+	--toastContainerBottom: 0;
+	--toastContainerLeft: calc(50vw - 8rem);
+}
+:global(.toaster.success) {
+	--toastColor: hsl(var(--suc));
+	--toastBackground: hsl(var(--su));
+	--toastBarBackground: hsl(var(--suc));
+	font-weight: bold;
+}
+
+:global(.toaster.info) {
+	--toastColor: hsl(var(--inc));
+	--toastBackground: hsl(var(--in));
+	--toastBarBackground: hsl(var(--inc));
+	font-weight: bold;
+}
+
+:global(.toaster.warn) {
+	--toastColor: hsl(var(--wac));
+	--toastBackground: hsl(var(--wa));
+	--toastBarBackground: hsl(var(--wac));
+	font-weight: bold;
+}
+:global(.toaster.error) {
+	--toastColor: hsl(var(--erc));
+	--toastBackground: hsl(var(--er));
+	--toastBarBackground: hsl(var(--erc));
+	font-weight: bold;
+}
+</style>

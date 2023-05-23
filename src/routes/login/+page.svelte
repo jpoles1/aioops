@@ -22,8 +22,8 @@
   }
   
 </script>
-<div class="card w-[80%] m-auto mt-20 p-5">
-  <h1 class="h1">Login Providers:</h1>
+<div class="card bg-base-300 w-[80%] m-auto mt-20 p-5 prose text-center">
+  <h1>Login Providers:</h1>
   <div class="flex flex-row align-middle justify-center w-full">
     {#each data.authMethods.authProviders as method}
       <div class="mx-5">
