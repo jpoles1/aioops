@@ -36,6 +36,8 @@
     export let editable = false;
 
     let form = {
+        title: "",
+        desc: "",
         prompt: "",
         ai_resp: "",
         user_resp: "",
@@ -82,10 +84,15 @@
     }
 </script>
 <form on:submit|preventDefault={submit_oops} class="oops-entry form-control w-[80%] flex flex-col justify-center align-middle m-auto">
-    <b class="mb-2">Prompt:</b>
+    
+    <input type="text" class="input input-lg text-center font-extrabold text-xl" placeholder="Your Title Here" required bind:value={form.title}/>
+    <br>
+    <AutoTextArea placeholder="Briefly describe your submission! (Optional)" class="italic" bind:value={form.desc} disabled={!editable}/>
+    <br>
+    <b class="mb-2"><span class="text-red-500">*</span>Prompt:</b>
     <AutoTextArea placeholder="What did you say to the AI..." bind:value={form.prompt} required disabled={!editable}/>
     <br>
-    <b class="mb-2">AI Response:</b>
+    <b class="mb-2"><span class="text-red-500">*</span>AI Response:</b>
     <AutoTextArea placeholder="What did the AI respond..." class="textarea" bind:value={form.ai_resp} required disabled={!editable}/>
     <br>
     <b class="mb-2">Your Ideal Response (Optional):</b>
@@ -94,10 +101,10 @@
     <b class="mb-2">Your Reasoning (Optional):</b>
     <AutoTextArea placeholder="Optional: Explain why you think the AI is wrong and your answer is better..." class="textarea" bind:value={form.user_reason} disabled={!editable}/>
     <br>
-    <b class="mb-2">Date of Interaction:</b>
+    <b class="mb-2"><span class="text-red-500">*</span>Date of Interaction:</b>
     <DateInput bind:date={form.event_date} disabled={!editable}/>
     <br>
-    <b class="mb-2">AI Model:</b>
+    <b class="mb-2"><span class="text-red-500">*</span>AI Model:</b>
     <Svelecte bind:value={form.model} options={ai_opts} placeholder="AI Model Name" class="input h-auto" creatable on:createoption="{new_ai_model}" required disabled={!editable}/>
     <br>
     <b class="mb-2">Tags:</b>
